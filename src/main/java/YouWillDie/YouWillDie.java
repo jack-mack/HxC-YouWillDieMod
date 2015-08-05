@@ -27,7 +27,6 @@ public class YouWillDie extends CommandHandler {
 
 	@SidedProxy(clientSide = "YouWillDie.ClientProxy", serverSide = "YouWillDie.CommonProxy")
 	public static CommonProxy proxy;
-
 	@Instance("YouWillDie")
 	public static YouWillDie instance;
 	

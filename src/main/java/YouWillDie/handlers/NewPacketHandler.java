@@ -33,9 +33,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 
-@SuppressWarnings("rawtypes")
 public class NewPacketHandler {
-
     public static BasicPacket[] packetTypes = new BasicPacket[256];
 
     public static int[] potionValues = new int[12];
@@ -226,9 +224,9 @@ public class NewPacketHandler {
                     } else if (aData instanceof Byte) {
                         bytes.writeByte((Byte) aData);
                     } else if (aData instanceof Float) {
-                        bytes.writeDouble((Double) aData);
-                    } else if (aData instanceof Double) {
                         bytes.writeFloat((Float) aData);
+                    } else if (aData instanceof Double) {
+                        bytes.writeDouble((Double) aData);
                     } else if (aData instanceof Character) {
                         bytes.writeChar((Character) aData);
                     }
@@ -284,7 +282,7 @@ public class NewPacketHandler {
 
     public static final BasicPacket
 
-            UPDATE_BLESSING = new BasicPacket(1) {
+    UPDATE_BLESSING = new BasicPacket(1) {
         @Override
         public void executeBoth(EntityPlayer player) {player.getEntityData().setString("Blessing", (String) data[0]);}
         @Override
@@ -296,7 +294,7 @@ public class NewPacketHandler {
         public void executeServer(EntityPlayer player) {
             String sound = (String) data[0];
             int x = (Integer) data[1], y = (Integer) data[2], z = (Integer) data[3];
-            player.worldObj.playSound(x, y, z, "fyresmodjam:" + sound, 1.0F, 1.0F, false);
+            player.worldObj.playSound(x, y, z, "youwilldie:" + sound, 1.0F, 1.0F, false);
         }
 
         @Override

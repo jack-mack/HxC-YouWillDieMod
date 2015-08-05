@@ -63,8 +63,11 @@ public class WorldData extends WorldSavedData {
 		super(key);
 	}
 
-    public static WorldData forWorld(World world) {
+	public WorldData(String key) {
+		super(key);
+	}
 
+	public static WorldData forWorld(World world) {
 		MapStorage storage = world.perWorldStorage;
 		WorldData result = (WorldData) storage.loadData(WorldData.class, key);
 
@@ -108,7 +111,6 @@ public class WorldData extends WorldSavedData {
 				if(player.hasKey("CraftingStats")) {craftingStatsByPlayer.put(player.getString("Name"), player.getCompoundTag("CraftingStats"));}
 			}
 		}
-
 		checkWorldData();
 	}
 
@@ -149,7 +151,6 @@ public class WorldData extends WorldSavedData {
 
 				tempPlayerStats.setTag(s, player);
 			}
-
 			nbttagcompound.setTag("TempPlayerStats", tempPlayerStats);
 		}
 	}

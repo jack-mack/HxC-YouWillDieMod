@@ -30,10 +30,14 @@ public class BlockCrystalStand extends BlockContainer {
 	}
 
 	@Override
-	public boolean hasTileEntity(int meta) {return true;}
+	public boolean hasTileEntity(int meta) {
+        return true;
+    }
 
 	@Override
-	public boolean isOpaqueCube() {return false;}
+	public boolean isOpaqueCube() {
+        return false;
+    }
 
 	@Override
 	@SideOnly(Side.CLIENT)

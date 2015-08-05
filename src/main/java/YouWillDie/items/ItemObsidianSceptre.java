@@ -50,8 +50,7 @@ public class ItemObsidianSceptre extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack par1ItemStack) {
+	public boolean hasEffect(ItemStack par1ItemStack, int pass) {
 		return par1ItemStack.getItemDamage() > 0;
 	}
 }
