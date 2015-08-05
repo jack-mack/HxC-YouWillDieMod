@@ -96,7 +96,7 @@ public class ModRegistry {
         theHunt = getNewAchievement(Config.AchievementID + 3, 0, -2, new ItemStack(Items.bow, 1), "theHunt", startTheGame, false);
         jackOfAllTrades = getNewAchievement(Config.AchievementID + 4, 0, 2, new ItemStack(Blocks.crafting_table, 1), "jackOfAllTrades", startTheGame, false);
 
-        page = new AchievementPage("The \"You Will Die\" Mod", startTheGame, losingIsFun, whoops, theHunt, jackOfAllTrades);
+        page = new AchievementPage("The \"You Will Die\" Mod HxC-Edition", startTheGame, losingIsFun, whoops, theHunt, jackOfAllTrades);
 
         AchievementPage.registerAchievementPage(page);
     }

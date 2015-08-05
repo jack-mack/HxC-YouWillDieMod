@@ -13,3 +13,9 @@ commands.currentGoal.usage=/currentGoal - used to check your current world goal
 commands.creatureKnowledge.usage=/creatureKnowledge [page] - used to check your current creature knowledge stats
 commands.weaponKnowledge.usage=/weaponKnowledge [page] - used to check your current weapon knowledge stats
 commands.craftingKnowledge.usage=/craftingKnowledge [page] - used to check your current crafting knowledge stats
+
+achievement.startTheGame=Start the Game!
+achievement.losingIsFun=Losing is fun! :D
+achievement.whoops=Whoops!
+achievement.theHunt=The Hunt
+achievement.jackOfAllTrades=Jack of all trades!

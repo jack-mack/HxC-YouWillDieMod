@@ -3,6 +3,7 @@ package YouWillDie;
 import YouWillDie.handlers.CommonTickHandler;
 import YouWillDie.handlers.GUIHandler;
 import YouWillDie.handlers.NewPacketHandler.ChannelHandler;
+import YouWillDie.handlers.PlayerEvents;
 import YouWillDie.misc.EntityStatHelper;
 import YouWillDie.misc.ItemStatHelper;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -17,23 +18,28 @@ import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.command.CommandHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.EnumMap;
 import java.util.Random;
 
-@Mod(modid = "YouWillDie", name = "You Will Die Mod", version = "0.0.4")
+@Mod(modid = "YouWillDie", name = "You Will Die Mod (HxCEdition)", version = "1.0.0")
 public class YouWillDie extends CommandHandler {
 
 	@SidedProxy(clientSide = "YouWillDie.ClientProxy", serverSide = "YouWillDie.CommonProxy")
 	public static CommonProxy proxy;
 	@Instance("YouWillDie")
 	public static YouWillDie instance;
+	public static MinecraftServer server;
 	
 	public static EnumMap<Side, FMLEmbeddedChannel> channels = NetworkRegistry.INSTANCE.newChannel("YWDMod", new ChannelHandler());
 
 	public static Random r = new Random();
     public static Config config;
+
+	CommonTickHandler commonHandler = new CommonTickHandler();
+	PlayerEvents pevents = new PlayerEvents();
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
         config = new Config(new Configuration(event.getSuggestedConfigurationFile()));
@@ -42,8 +48,8 @@ public class YouWillDie extends CommandHandler {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		CommonTickHandler commonHandler = new CommonTickHandler();
 		FMLCommonHandler.instance().bus().register(commonHandler);
+		FMLCommonHandler.instance().bus().register(pevents);
         ModRegistry.init();
 
 		new ItemStatHelper().register();

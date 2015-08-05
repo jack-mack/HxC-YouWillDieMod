@@ -303,7 +303,9 @@ public class NewPacketHandler {
 
     UPDATE_POTION_KNOWLEDGE = new BasicPacket(3) {
         @Override
-        public void executeBoth(EntityPlayer player) {player.getEntityData().setIntArray("PotionKnowledge", (int[]) data[0]);}
+        public void executeBoth(EntityPlayer player) {
+            player.getEntityData().setIntArray("PotionKnowledge", (int[]) data[0]);
+        }
         @Override
         public Class[] getExpectedClasses() {return new Class[] {int[].class};}
     },

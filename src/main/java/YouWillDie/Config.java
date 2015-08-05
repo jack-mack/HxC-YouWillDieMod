@@ -4,23 +4,11 @@ import net.minecraftforge.common.config.Configuration;
 import org.lwjgl.input.Keyboard;
 
 public class Config {
-    public static boolean pillarGlow;
-    public static int pillarGenChance;
-    public static int maxPillarsPerChunk;
-    public static int towerGenChance;
-    public static int trapGenChance;
-    public static int mushroomReplaceChance;
-    public static boolean spawnTraps;
-    public static boolean spawnTowers;
-    public static boolean spawnRandomPillars;
-    public static boolean Disadvantages;
-    public static boolean enableMobKillStats;
-    public static boolean enableWeaponKillStats;
-    public static boolean enableCraftingStats;
-    public static boolean trapsBelowGroundOnly;
-    public static int ExamineKey;
-    public static int BlessingKey;
-    public static int AchievementID;
+    public static int pillarGenChance, maxPillarsPerChunk, towerGenChance, trapGenChance;
+    public static int mushroomReplaceChance, ExamineKey, BlessingKey, AchievementID;
+    public static boolean spawnTraps, spawnTowers, spawnRandomPillars, Disadvantages,
+            enableMobKillStats, enableWeaponKillStats, enableCraftingStats, trapsBelowGroundOnly,
+            enableMobRenaming, pillarGlow;
     public Config(Configuration config) {
         config.load();
 
@@ -38,6 +26,7 @@ public class Config {
         Disadvantages = config.getBoolean("Disadvantages", "Features", true, "Disadvantages to world until task is completed?");
 
         enableMobKillStats = config.getBoolean("MobKillStats", "Features", true, "Enable mob kill stats?");
+        enableMobRenaming = config.getBoolean("RenameMobs", "Features", true, "Rename mobs to the Level Mob?");
         enableWeaponKillStats = config.getBoolean("WeaponKillStats", "Features", true, "Enable weapon kill stats?");
         enableCraftingStats = config.getBoolean("CraftingStats", "Features", true, "Enable crafting stats?");
         trapsBelowGroundOnly = config.getBoolean("TrapsBelowGroundOnly", "Features", true, "Spawn hidden traps below ground only?");

@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ItemMysteryPotion extends Item {
-
 	public IIcon[] icons = null;
 
 	public ItemMysteryPotion() {
@@ -63,13 +62,14 @@ public class ItemMysteryPotion extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-		int damage = par1ItemStack.getItemDamage() % 13;
+		int damage = par1ItemStack.getItemDamageForDisplay() % 13;
 		String name = "Mystery Potion #" + (damage + 1);
 
 		String blessing = null;
 
-		if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {blessing = getBlessing();}
-
+		if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			blessing = getBlessing();
+		}
 		if(damage < 12) {
 			if(Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().thePlayer.getEntityData().hasKey("PotionKnowledge")) {
 				if(Minecraft.getMinecraft().thePlayer.getEntityData().getIntArray("PotionKnowledge")[damage] != -1) {
@@ -145,8 +145,9 @@ public class ItemMysteryPotion extends Item {
 					Potion.potionTypes[value].affectEntity(par3EntityPlayer, par3EntityPlayer, 1, 1);
 				}
 
-				if(!par3EntityPlayer.getEntityData().hasKey("PotionKnowledge")) {par3EntityPlayer.getEntityData().setIntArray("PotionKnowledge", new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1});}
-
+				if(!par3EntityPlayer.getEntityData().hasKey("PotionKnowledge")) {
+					par3EntityPlayer.getEntityData().setIntArray("PotionKnowledge", new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1});
+				}
 				if(par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[damage] == -1) {
 					par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[damage] = 1;
 
