@@ -271,7 +271,7 @@ public class ItemStatHelper {
 		if(statTrackersByClass.containsKey(itemClass)) {temp.addAll(statTrackersByClass.get(itemClass));}
 		
 		for(ItemStatTracker e : genericTrackers) {
-			if(!temp.contains(e)) {
+			if(!temp.contains(e) && itemClass != null) {
 				for(Class c : e.classes) {
 					if(c.isAssignableFrom(itemClass)) {
 						ArrayList<ItemStatTracker> list;
