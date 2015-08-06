@@ -43,7 +43,7 @@ public class YouWillDie extends CommandHandler {
 	public static Random r = new Random();
     public static Config config;
 
-	public static List<Item> whitelistedItems = Arrays.asList(Items.diamond_sword, Items.golden_sword, Items.iron_sword, Items.stone_sword, Items.wooden_sword, Items.diamond_axe, Items.golden_axe, Items.iron_axe, Items.stone_axe, Items.wooden_axe, Items.diamond_pickaxe, Items.golden_pickaxe, Items.iron_pickaxe, Items.stone_pickaxe, Items.wooden_pickaxe, Items.diamond_shovel, Items.golden_shovel, Items.iron_shovel, Items.stone_shovel, Items.wooden_shovel);
+	public static List<Item> whitelistedItems = Arrays.asList(Items.diamond_sword, Items.golden_sword, Items.iron_sword, Items.stone_sword, Items.wooden_sword, Items.diamond_axe, Items.golden_axe, Items.iron_axe, Items.stone_axe, Items.wooden_axe, Items.diamond_pickaxe, Items.golden_pickaxe, Items.iron_pickaxe, Items.stone_pickaxe, Items.wooden_pickaxe, Items.diamond_shovel, Items.golden_shovel, Items.iron_shovel, Items.stone_shovel, Items.wooden_shovel, Items.bow);
 
 	CommonTickHandler commonHandler = new CommonTickHandler();
 	PlayerEvents pevents = new PlayerEvents();

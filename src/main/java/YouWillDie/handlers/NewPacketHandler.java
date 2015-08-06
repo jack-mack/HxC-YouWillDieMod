@@ -367,7 +367,7 @@ public class NewPacketHandler {
         @Override
         public void executeServer(EntityPlayer player) {
             for(Object stack : player.inventory.mainInventory) {
-                if(stack == null || !(stack instanceof ItemStack) || YouWillDie.whitelistedItems.contains(stack) ) {continue;}
+                if(stack == null || !(stack instanceof ItemStack) || !YouWillDie.whitelistedItems.contains(stack) ) {continue;}
                 ItemStatHelper.processItemStack((ItemStack) stack, YouWillDie.r);
             }
         }
