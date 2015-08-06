@@ -3,6 +3,7 @@ package YouWillDie.misc;
 import YouWillDie.Config;
 import YouWillDie.handlers.CommonTickHandler;
 import YouWillDie.handlers.NewPacketHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraft.entity.EntityLivingBase;
@@ -279,9 +280,13 @@ public class ItemStatHelper {
 							list = new ArrayList<ItemStatTracker>();
 							statTrackersByClass.put(itemClass, list);
 						} else {list = statTrackersByClass.get(itemClass);}
-						
-						if(!statTrackersByClass.get(itemClass).contains(e)) {list.add(e);}
-						
+
+						try {
+							if (!statTrackersByClass.get(itemClass).contains(e)) {
+								list.add(e);
+							}
+						} catch (Exception d) {d.printStackTrace();
+							FMLLog.warning("YWDM", itemClass.getCanonicalName());}
 						temp.add(e);
 						
 						break;
