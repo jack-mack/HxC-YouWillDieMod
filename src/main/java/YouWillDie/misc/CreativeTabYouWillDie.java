@@ -5,7 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public class CreativeTabYouWillDie {
-    public static CreativeTabs tabYouWillDie = new CreativeTabs("\"You Will Die\" Mod"){
+    public static CreativeTabs tabYouWillDie = new CreativeTabs("ywd"){
         public Item getTabIconItem() {
             return ModRegistry.sceptre;
         }

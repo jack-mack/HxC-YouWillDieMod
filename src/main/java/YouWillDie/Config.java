@@ -9,6 +9,7 @@ public class Config {
     public static boolean spawnTraps, spawnTowers, spawnRandomPillars, Disadvantages,
             enableMobKillStats, enableWeaponKillStats, enableCraftingStats, trapsBelowGroundOnly,
             enableMobRenaming, pillarGlow;
+    public static String[] bannedItems;
     public Config(Configuration config) {
         config.load();
 
@@ -35,6 +36,8 @@ public class Config {
         BlessingKey = config.getInt("BlessingKey", "Keybindings", Keyboard.KEY_K, 0, 0, "");
 
         AchievementID = config.getInt("AchievementsID", "IDs", 2500, 1, 10000, "ID for achivements");
+
+        bannedItems = config.get("Features", "WhitelistedItems", new String[]{""}, "Add things to this for stat tracker").getStringList();
 
         if(config.hasChanged()){
             config.save();

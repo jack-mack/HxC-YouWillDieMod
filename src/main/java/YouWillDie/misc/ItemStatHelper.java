@@ -318,7 +318,6 @@ public class ItemStatHelper {
 
 	@SubscribeEvent
 	public void onCrafting(ItemCraftedEvent event) {
-
 		EntityPlayer player = event.player;
 		ItemStack item = event.crafting;
 
