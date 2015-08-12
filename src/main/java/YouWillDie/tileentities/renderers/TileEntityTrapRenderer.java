@@ -2,7 +2,7 @@ package YouWillDie.tileentities.renderers;
 
 import YouWillDie.ModRegistry;
 import YouWillDie.blocks.BlockTrap;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.models.ModelSpikes;
 import YouWillDie.models.ModelTrap2;
 import YouWillDie.tileentities.TileEntityTrap;
@@ -44,7 +44,7 @@ public class TileEntityTrapRenderer extends TileEntitySpecialRenderer {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, l1, l2);
 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		boolean active = player != null && (!NewPacketHandler.trapsDisabled || tl.placedBy != null) && (player.getCommandSenderName().equals(tl.placedBy) || tl.setting != 0 || player.isSneaking() || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout")));
+		boolean active = player != null && (!PacketHandler.trapsDisabled || tl.placedBy != null) && (player.getCommandSenderName().equals(tl.placedBy) || tl.setting != 0 || player.isSneaking() || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout")));
 
 		int type = world.getBlockMetadata(i, j, k);
 

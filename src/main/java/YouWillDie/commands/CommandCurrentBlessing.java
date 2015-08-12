@@ -1,6 +1,6 @@
 package YouWillDie.commands;
 
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.tileentities.TileEntityPillar;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -32,7 +32,7 @@ public class CommandCurrentBlessing implements ICommand {
 			int index = 0;
 			for(int i = 0; i < TileEntityPillar.validBlessings.length; i++) {if(TileEntityPillar.validBlessings[i].equals(blessing)) {index = i; break;}}
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, blessing != null ? "\u00A7eCurrent Blessing - \u00A7oBlessing of the " + blessing + ": " + TileEntityPillar.blessingDescriptions[index] : "You don't currently have a blessing.");
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, blessing != null ? "\u00A7eCurrent Blessing - \u00A7oBlessing of the " + blessing + ": " + TileEntityPillar.blessingDescriptions[index] : "You don't currently have a blessing.");
 		}
 	}
 

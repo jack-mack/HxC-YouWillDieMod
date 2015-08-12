@@ -3,6 +3,7 @@ package YouWillDie.handlers;
 import YouWillDie.Config;
 import YouWillDie.ModRegistry;
 import YouWillDie.misc.EntityStatHelper;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.tileentities.TileEntityPillar;
 import YouWillDie.worldgen.WorldData;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -19,7 +20,7 @@ public class PlayerEvents {
 
         StatTrackers.TrackStats();
         if(!player.worldObj.isRemote) {
-            NewPacketHandler.UPDATE_WORLD_DATA.sendToPlayer(player, CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
+            PacketHandler.UPDATE_WORLD_DATA.sendToPlayer(player, CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
 
             String name = CommonTickHandler.worldData.currentTask.equals("Kill") ? WorldData.validMobNames[CommonTickHandler.worldData.currentTaskID] : WorldData.validItems[CommonTickHandler.worldData.currentTaskID].getDisplayName();
 
@@ -38,16 +39,17 @@ public class PlayerEvents {
                 player.getEntityData().setString("Blessing", TileEntityPillar.validBlessings[YouWillDie.YouWillDie.r.nextInt(TileEntityPillar.validBlessings.length)]);
                 while(player.getEntityData().getString("Blessing").equals("Inferno")) {player.getEntityData().setString("Blessing", TileEntityPillar.validBlessings[YouWillDie.YouWillDie.r.nextInt(TileEntityPillar.validBlessings.length)]);}
 
-                NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A72You've been granted the Blessing of the " + player.getEntityData().getString("Blessing") + ". (Use /currentBlessing to check effect)");
+                PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A72You've been granted the Blessing of the " + player.getEntityData().getString("Blessing") + ". (Use /currentBlessing to check effect)");
             }
 
-            NewPacketHandler.UPDATE_BLESSING.sendToPlayer(player, player.getEntityData().getString("Blessing"));
+            PacketHandler.UPDATE_BLESSING.sendToPlayer(player, player.getEntityData().getString("Blessing"));
 
-            if(EntityStatHelper.hasStat(player, "BlessingCounter")) {NewPacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", EntityStatHelper.getStat(player, "BlessingCounter"));}
+            if(EntityStatHelper.hasStat(player, "BlessingCounter")) {
+                PacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", EntityStatHelper.getStat(player, "BlessingCounter"));}
 
             if(!player.getEntityData().hasKey("PotionKnowledge")) {player.getEntityData().setIntArray("PotionKnowledge", new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1});}
 
-            NewPacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(player, player.getEntityData().getIntArray("PotionKnowledge"));
+            PacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(player, player.getEntityData().getIntArray("PotionKnowledge"));
         }
         player.triggerAchievement(ModRegistry.startTheGame);
     }
@@ -56,15 +58,16 @@ public class PlayerEvents {
     public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         EntityPlayer player = event.player;
 
-        NewPacketHandler.UPDATE_WORLD_DATA.sendToPlayer(player, CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
+        PacketHandler.UPDATE_WORLD_DATA.sendToPlayer(player, CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
 
-        NewPacketHandler.UPDATE_BLESSING.sendToPlayer(player, player.getEntityData().getString("Blessing"));
+        PacketHandler.UPDATE_BLESSING.sendToPlayer(player, player.getEntityData().getString("Blessing"));
 
-        if(EntityStatHelper.hasStat(player, "BlessingCounter")) {NewPacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", EntityStatHelper.getStat(player, "BlessingCounter"));}
+        if(EntityStatHelper.hasStat(player, "BlessingCounter")) {
+            PacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", EntityStatHelper.getStat(player, "BlessingCounter"));}
 
         if(!player.getEntityData().hasKey("PotionKnowledge")) {player.getEntityData().setIntArray("PotionKnowledge", new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1});}
 
-        NewPacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(player, player.getEntityData().getIntArray("PotionKnowledge"));
+        PacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(player, player.getEntityData().getIntArray("PotionKnowledge"));
     }
 
     @SubscribeEvent

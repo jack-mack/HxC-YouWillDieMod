@@ -2,7 +2,7 @@ package YouWillDie;
 
 import YouWillDie.handlers.CommonTickHandler;
 import YouWillDie.handlers.GUIHandler;
-import YouWillDie.handlers.NewPacketHandler.ChannelHandler;
+import YouWillDie.network.PacketHandler.ChannelHandler;
 import YouWillDie.handlers.PlayerEvents;
 import YouWillDie.misc.EntityStatHelper;
 import YouWillDie.misc.ItemStatHelper;

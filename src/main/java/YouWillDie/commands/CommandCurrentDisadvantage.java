@@ -1,7 +1,7 @@
 package YouWillDie.commands;
 
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.worldgen.WorldData;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -31,7 +31,7 @@ public class CommandCurrentDisadvantage implements ICommand {
 
 			int index = -1;
 			for(int i = 0; i < WorldData.validDisadvantages.length; i++) {if(WorldData.validDisadvantages[i].equals(CommonTickHandler.worldData.getDisadvantage())) {index = i; break;}}
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eWorld disadvantage: " + CommonTickHandler.worldData.getDisadvantage() + (index == -1 ? "" : " (" + WorldData.disadvantageDescriptions[index] + ")"));
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eWorld disadvantage: " + CommonTickHandler.worldData.getDisadvantage() + (index == -1 ? "" : " (" + WorldData.disadvantageDescriptions[index] + ")"));
 		}
 	}
 

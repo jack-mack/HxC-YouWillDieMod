@@ -4,7 +4,7 @@ import YouWillDie.Config;
 import YouWillDie.ModRegistry;
 import YouWillDie.YouWillDie;
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.worldgen.WorldData;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.Entity;
@@ -143,7 +143,7 @@ public class EntityStatHelper {
 				if(!event.entity.getEntityData().hasKey("Blessing") && CommonTickHandler.worldData.blessingByPlayer.containsKey(event.entity.getCommandSenderName())) {
 					event.entity.getEntityData().setString("Blessing", CommonTickHandler.worldData.blessingByPlayer.get(event.entity.getCommandSenderName()));
 
-					NewPacketHandler.UPDATE_BLESSING.sendToPlayer((EntityPlayer) event.entity, event.entity.getEntityData().getString("Blessing"));
+					PacketHandler.UPDATE_BLESSING.sendToPlayer((EntityPlayer) event.entity, event.entity.getEntityData().getString("Blessing"));
 
 					CommonTickHandler.worldData.blessingByPlayer.remove(event.entity.getCommandSenderName());
 					CommonTickHandler.worldData.markDirty();
@@ -152,7 +152,7 @@ public class EntityStatHelper {
 				if(!event.entity.getEntityData().hasKey("PotionKnowledge") && CommonTickHandler.worldData.potionKnowledgeByPlayer.containsKey(event.entity.getCommandSenderName())) {
 					event.entity.getEntityData().setIntArray("PotionKnowledge", CommonTickHandler.worldData.potionKnowledgeByPlayer.get(event.entity.getCommandSenderName()));
 
-					NewPacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer((EntityPlayer) event.entity, event.entity.getEntityData().getIntArray("PotionKnowledge"));
+					PacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer((EntityPlayer) event.entity, event.entity.getEntityData().getIntArray("PotionKnowledge"));
 
 					CommonTickHandler.worldData.potionKnowledgeByPlayer.remove(event.entity.getCommandSenderName());
 					CommonTickHandler.worldData.markDirty();
@@ -260,32 +260,32 @@ public class EntityStatHelper {
 				if(name1.contains("Block")) {if(name1.contains("Block")) {name1 = name1.replace("Block", "Blocks").replace("block", "blocks");}}
 				else {name1 += "s";}
 
-				NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7fCurrent Goal Progress: " + CommonTickHandler.worldData.progress + "/" + CommonTickHandler.worldData.currentTaskAmount + " " + name1 + " "+ CommonTickHandler.worldData.currentTask + "ed.");
+				PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7fCurrent Goal Progress: " + CommonTickHandler.worldData.progress + "/" + CommonTickHandler.worldData.currentTaskAmount + " " + name1 + " "+ CommonTickHandler.worldData.currentTask + "ed.");
 
 				if(CommonTickHandler.worldData.progress >= CommonTickHandler.worldData.currentTaskAmount) {
 					CommonTickHandler.worldData.progress = 0;
 					CommonTickHandler.worldData.tasksCompleted++;
 
-					NewPacketHandler.LEVEL_UP.sendToAllPlayers(CommonTickHandler.worldData.rewardLevels);
+					PacketHandler.LEVEL_UP.sendToAllPlayers(CommonTickHandler.worldData.rewardLevels);
 
 					if(!CommonTickHandler.worldData.enderDragonKilled && event.entity instanceof EntityDragon) {CommonTickHandler.worldData.enderDragonKilled = true;}
 					CommonTickHandler.worldData.giveNewTask();
 
-					NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA world goal has been completed!" + (!CommonTickHandler.worldData.getDisadvantage().equals("None") ? " World disadvantage has been lifted!": ""));
+					PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA world goal has been completed!" + (!CommonTickHandler.worldData.getDisadvantage().equals("None") ? " World disadvantage has been lifted!": ""));
 
-					NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA new world goal has been set: " + (CommonTickHandler.worldData.currentTask + " " + CommonTickHandler.worldData.currentTaskAmount + " " + (CommonTickHandler.worldData.currentTask.equals("Kill") ? WorldData.validMobNames[CommonTickHandler.worldData.currentTaskID] : WorldData.validItems[CommonTickHandler.worldData.currentTaskID].getDisplayName()) + "s. (" + CommonTickHandler.worldData.progress + " " + CommonTickHandler.worldData.currentTask + "ed)"));
+					PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA new world goal has been set: " + (CommonTickHandler.worldData.currentTask + " " + CommonTickHandler.worldData.currentTaskAmount + " " + (CommonTickHandler.worldData.currentTask.equals("Kill") ? WorldData.validMobNames[CommonTickHandler.worldData.currentTaskID] : WorldData.validItems[CommonTickHandler.worldData.currentTaskID].getDisplayName()) + "s. (" + CommonTickHandler.worldData.progress + " " + CommonTickHandler.worldData.currentTask + "ed)"));
 
 					CommonTickHandler.worldData.currentDisadvantage = "None";
 				}
 
-				NewPacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
+				PacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
 
 				CommonTickHandler.worldData.markDirty();
 			}
 
 			if(!CommonTickHandler.worldData.enderDragonKilled && event.entity instanceof EntityDragon) {
 				CommonTickHandler.worldData.enderDragonKilled = true;
-				NewPacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
+				PacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(CommonTickHandler.worldData.potionValues, CommonTickHandler.worldData.potionDurations, CommonTickHandler.worldData.getDisadvantage(), CommonTickHandler.worldData.currentTask, CommonTickHandler.worldData.currentTaskID, CommonTickHandler.worldData.currentTaskAmount, CommonTickHandler.worldData.progress, CommonTickHandler.worldData.tasksCompleted, CommonTickHandler.worldData.enderDragonKilled, Config.spawnTraps, CommonTickHandler.worldData.rewardLevels, CommonTickHandler.worldData.mushroomColors);
 				CommonTickHandler.worldData.markDirty();
 			}
 		}
@@ -325,7 +325,7 @@ public class EntityStatHelper {
 			if(Config.enableMobKillStats) {
 				for(int i = 0; i < knowledge.length; i++) {
 					if(killCount[i] == killStats.getInteger(mob)) {
-						NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + knowledge[i].toLowerCase() + " " + mob.toLowerCase() + " slayer! (+" + damageBonusString[i] + "% damage against " + mob.toLowerCase() + "s.)" + (i < knowledge.length - 1 ? " " + (killCount[i + 1] - killCount[i]) + " " + mob.toLowerCase() + " kills to next rank." : ""));
+						PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + knowledge[i].toLowerCase() + " " + mob.toLowerCase() + " slayer! (+" + damageBonusString[i] + "% damage against " + mob.toLowerCase() + "s.)" + (i < knowledge.length - 1 ? " " + (killCount[i + 1] - killCount[i]) + " " + mob.toLowerCase() + " kills to next rank." : ""));
 						break;
 					}
 				}
@@ -367,7 +367,7 @@ public class EntityStatHelper {
 			if(Config.enableWeaponKillStats) {
 				for(int i = 0; i < knowledge.length; i++) {
 					if(killCount[i] * 2 == weaponStats.getInteger(weapon)) {
-						NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + knowledge[i].toLowerCase() + " " + weapon.toLowerCase() + " user! (+" + damageBonusString[i] + "% damage with " + weapon.toLowerCase() + "s.)" + (i < knowledge.length - 1 ? " " + (killCount[i + 1] * 2 - killCount[i] * 2) + " " + weapon.toLowerCase() + " kills to next rank." : ""));
+						PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + knowledge[i].toLowerCase() + " " + weapon.toLowerCase() + " user! (+" + damageBonusString[i] + "% damage with " + weapon.toLowerCase() + "s.)" + (i < knowledge.length - 1 ? " " + (killCount[i + 1] * 2 - killCount[i] * 2) + " " + weapon.toLowerCase() + " kills to next rank." : ""));
 						break;
 					}
 				}

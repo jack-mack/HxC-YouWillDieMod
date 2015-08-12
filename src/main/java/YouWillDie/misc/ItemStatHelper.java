@@ -2,7 +2,7 @@ package YouWillDie.misc;
 
 import YouWillDie.Config;
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraft.entity.EntityLivingBase;
@@ -348,7 +348,7 @@ public class ItemStatHelper {
 
 				for(int i = 0; i < EntityStatHelper.knowledge.length; i++) {
 					if(EntityStatHelper.killCount[i] == craftingStats.getInteger(itemName)) {
-						NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + EntityStatHelper.knowledge[i].toLowerCase() + " " + itemName.toLowerCase() + " smith! (" + (i < EntityStatHelper.knowledge.length - 1 ? (EntityStatHelper.killCount[i + 1] * 2 - EntityStatHelper.killCount[i] * 2) + " " + itemName.toLowerCase() + " crafts to next rank." : ""));
+						PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7o\u00A73You've become a " + EntityStatHelper.knowledge[i].toLowerCase() + " " + itemName.toLowerCase() + " smith! (" + (i < EntityStatHelper.knowledge.length - 1 ? (EntityStatHelper.killCount[i + 1] * 2 - EntityStatHelper.killCount[i] * 2) + " " + itemName.toLowerCase() + " crafts to next rank." : ""));
 						break;
 					}
 				}

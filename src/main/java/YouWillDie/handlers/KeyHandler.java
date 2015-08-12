@@ -1,5 +1,6 @@
 package YouWillDie.handlers;
 
+import YouWillDie.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,8 +61,8 @@ public class KeyHandler {
 								for(String s2 : s.split("@")) {
 									//Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(s2));
 									
-									NewPacketHandler.SEND_MESSAGE.data = new Object[] {s2};
-									NewPacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
+									PacketHandler.SEND_MESSAGE.data = new Object[] {s2};
+									PacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
 								}
 
 							} else if(te != null && te instanceof TileEntityTrap) {
@@ -72,8 +73,8 @@ public class KeyHandler {
 								
 								//Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(s));
 								
-								NewPacketHandler.SEND_MESSAGE.data = new Object[] {s};
-								NewPacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
+								PacketHandler.SEND_MESSAGE.data = new Object[] {s};
+								PacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
 							} else {
 								ItemStack stack = new ItemStack(minecraft.theWorld.getBlock(x, y, z), 1, minecraft.theWorld.getBlockMetadata(x, y, z));
 
@@ -82,12 +83,12 @@ public class KeyHandler {
 									
 									//Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("\u00A7eIt's a " + name + (!name.contains("block") ? " block." : ".")));
 								
-									NewPacketHandler.SEND_MESSAGE.data = new Object[] {"\u00A7eIt's a " + name + (!name.contains("block") ? " block." : ".")};
-									NewPacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
+									PacketHandler.SEND_MESSAGE.data = new Object[] {"\u00A7eIt's a " + name + (!name.contains("block") ? " block." : ".")};
+									PacketHandler.SEND_MESSAGE.executeClient(Minecraft.getMinecraft().thePlayer);
 								}
 							}
 						} else if(o.typeOfHit == MovingObjectType.ENTITY && o.entityHit != null) {
-							NewPacketHandler.EXAMINE_MOB.sendToServer(o.entityHit.dimension, o.entityHit.getEntityId());
+							PacketHandler.EXAMINE_MOB.sendToServer(o.entityHit.dimension, o.entityHit.getEntityId());
 						}
 					}
 				}
@@ -98,9 +99,10 @@ public class KeyHandler {
 					if(blessing != null) {
 						if(minecraft.objectMouseOver != null) {
 							MovingObjectPosition o = minecraft.objectMouseOver;
-							if(o.typeOfHit == MovingObjectType.BLOCK) {NewPacketHandler.ACTIVATE_BLESSING.sendToServer(minecraft.objectMouseOver.blockX, minecraft.objectMouseOver.blockY, minecraft.objectMouseOver.blockZ);}
+							if(o.typeOfHit == MovingObjectType.BLOCK) {
+								PacketHandler.ACTIVATE_BLESSING.sendToServer(minecraft.objectMouseOver.blockX, minecraft.objectMouseOver.blockY, minecraft.objectMouseOver.blockZ);}
 						} else {
-							NewPacketHandler.ACTIVATE_BLESSING.sendToServer(player.chunkCoordX, player.chunkCoordY, player.chunkCoordZ);
+							PacketHandler.ACTIVATE_BLESSING.sendToServer(player.chunkCoordX, player.chunkCoordY, player.chunkCoordZ);
 						}
 					}
 				}

@@ -1,7 +1,7 @@
 package YouWillDie.commands;
 
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.worldgen.WorldData;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -36,11 +36,11 @@ public class CommandCurrentWorldTask implements ICommand {
 				else {name += "s";}
 			}
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eWorld goal: " + CommonTickHandler.worldData.currentTask + " " + CommonTickHandler.worldData.currentTaskAmount + " " + name + ". (" + CommonTickHandler.worldData.progress + " " + CommonTickHandler.worldData.currentTask + "ed)");
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eWorld goal: " + CommonTickHandler.worldData.currentTask + " " + CommonTickHandler.worldData.currentTaskAmount + " " + name + ". (" + CommonTickHandler.worldData.progress + " " + CommonTickHandler.worldData.currentTask + "ed)");
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7f   Reward: " + CommonTickHandler.worldData.rewardLevels + " Experience Levels");
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7f   Reward: " + CommonTickHandler.worldData.rewardLevels + " Experience Levels");
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eGoals completed: " + CommonTickHandler.worldData.tasksCompleted);
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, "\u00A7eGoals completed: " + CommonTickHandler.worldData.tasksCompleted);
 		}
 	}
 

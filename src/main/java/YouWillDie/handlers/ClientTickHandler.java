@@ -2,6 +2,7 @@ package YouWillDie.handlers;
 
 import YouWillDie.ModRegistry;
 import YouWillDie.misc.ItemStatHelper;
+import YouWillDie.network.PacketHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public class ClientTickHandler {
 				}
 
 				if(sendPacket) {
-					NewPacketHandler.UPDATE_PLAYER_ITEMS.sendToServer((Object) null);
+					PacketHandler.UPDATE_PLAYER_ITEMS.sendToServer((Object) null);
 					time = System.currentTimeMillis();
 				}
 			}

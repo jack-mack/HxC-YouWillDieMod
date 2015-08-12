@@ -2,6 +2,7 @@ package YouWillDie.handlers;
 
 import YouWillDie.Config;
 import YouWillDie.misc.EntityStatHelper;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.worldgen.WorldData;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -71,7 +72,7 @@ public class CommonTickHandler {
 							counter = Math.max(0, counter - 1);
 
 							if(counter == 0) {
-								NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7cYou calm down.");
+								PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7cYou calm down.");
 								coolDown = 1200; timer = 0; blessingActive = false;
 							}
 						}
@@ -89,7 +90,8 @@ public class CommonTickHandler {
 					}
 				}
 
-				if(EntityStatHelper.hasStat(player, "BlessingCounter") && Integer.parseInt(EntityStatHelper.getStat(player, "BlessingCounter")) != counter) {NewPacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", "" + counter);}
+				if(EntityStatHelper.hasStat(player, "BlessingCounter") && Integer.parseInt(EntityStatHelper.getStat(player, "BlessingCounter")) != counter) {
+					PacketHandler.UPDATE_STAT.sendToPlayer(player, "BlessingCounter", "" + counter);}
 				
 				EntityStatHelper.giveStat(player, "BlessingActive", blessingActive);
 				EntityStatHelper.giveStat(player, "BlessingCooldown", coolDown);
@@ -116,13 +118,13 @@ public class CommonTickHandler {
 							if(name1.contains("Block")) {if(name1.contains("Block")) {name1 = name1.replace("Block", "Blocks").replace("block", "blocks");}}
 							else {name1 += "s";}
 
-							NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7fCurrent Goal Progress: " + worldData.progress + "/" + worldData.currentTaskAmount + " " + name1 + " "+ worldData.currentTask + "ed.");
+							PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7fCurrent Goal Progress: " + worldData.progress + "/" + worldData.currentTaskAmount + " " + name1 + " "+ worldData.currentTask + "ed.");
 
 							if(worldData.progress >= worldData.currentTaskAmount) {
 								worldData.progress = 0;
 								worldData.tasksCompleted++;
 
-								NewPacketHandler.LEVEL_UP.sendToAllPlayers(worldData.rewardLevels);
+								PacketHandler.LEVEL_UP.sendToAllPlayers(worldData.rewardLevels);
 
 								worldData.giveNewTask();
 
@@ -134,14 +136,14 @@ public class CommonTickHandler {
 									else {name += "s";}
 								}
 
-								NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA world goal has been completed!" + (!worldData.getDisadvantage().equals("None") ? " World disadvantage has been lifted!": ""));
+								PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA world goal has been completed!" + (!worldData.getDisadvantage().equals("None") ? " World disadvantage has been lifted!": ""));
 
-								NewPacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA new world goal has been set: " + (worldData.currentTask + " " + worldData.currentTaskAmount + " " + name + ". (" + worldData.progress + " " + worldData.currentTask + "ed)"));
+								PacketHandler.SEND_MESSAGE.sendToAllPlayers("\u00A7eA new world goal has been set: " + (worldData.currentTask + " " + worldData.currentTaskAmount + " " + name + ". (" + worldData.progress + " " + worldData.currentTask + "ed)"));
 
 								worldData.currentDisadvantage = "None";
 							}
 
-							NewPacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(worldData.potionValues, worldData.potionDurations, worldData.getDisadvantage(), worldData.currentTask, worldData.currentTaskID, worldData.currentTaskAmount, worldData.progress, worldData.tasksCompleted, worldData.enderDragonKilled, Config.spawnTraps, worldData.rewardLevels, worldData.mushroomColors);
+							PacketHandler.UPDATE_WORLD_DATA.sendToAllPlayers(worldData.potionValues, worldData.potionDurations, worldData.getDisadvantage(), worldData.currentTask, worldData.currentTaskID, worldData.currentTaskAmount, worldData.progress, worldData.tasksCompleted, worldData.enderDragonKilled, Config.spawnTraps, worldData.rewardLevels, worldData.mushroomColors);
 
 							worldData.setDirty(true);
 						}

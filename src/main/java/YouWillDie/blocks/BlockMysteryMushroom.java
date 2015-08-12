@@ -1,7 +1,7 @@
 package YouWillDie.blocks;
 
 import YouWillDie.ModRegistry;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -131,7 +131,7 @@ public class BlockMysteryMushroom extends BlockFlower {
 	 @Override
 	 @SideOnly(Side.CLIENT)
 	 public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-		 return NewPacketHandler.mushroomColors[par1IBlockAccess.getBlockMetadata(par2, par3, par4)][renderPass];
+		 return PacketHandler.mushroomColors[par1IBlockAccess.getBlockMetadata(par2, par3, par4)][renderPass];
 	 }
 
 	 public static int renderPass;

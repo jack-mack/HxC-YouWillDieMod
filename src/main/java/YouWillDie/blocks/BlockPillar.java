@@ -2,7 +2,7 @@ package YouWillDie.blocks;
 
 import YouWillDie.Config;
 import YouWillDie.ModRegistry;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.misc.EntityStatHelper;
 import YouWillDie.tileentities.TileEntityPillar;
 import YouWillDie.worldgen.WorldGenTrapsTowersAndMore;
@@ -96,11 +96,11 @@ public class BlockPillar extends BlockContainer {
 
 						if(!par1World.isRemote) {
 							par1World.playSoundAtEntity(par5EntityPlayer, "YouWillDie:pillarActivated", 1.0F, 1.0F);
-							NewPacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "Activated blessing of the " + ((TileEntityPillar) te).blessing + ".");
+							PacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "Activated blessing of the " + ((TileEntityPillar) te).blessing + ".");
 						}
 					}
 				} else if(!par1World.isRemote) {
-					NewPacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7cCannot activate pillar with monsters nearby!");
+					PacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7cCannot activate pillar with monsters nearby!");
 				}
 			}
 		} else if(!par1World.isRemote) {
@@ -116,7 +116,7 @@ public class BlockPillar extends BlockContainer {
 			par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5F, par3 + 0.5F, par4 + 0.5F, new ItemStack(ModRegistry.itemPillar, 1, damage)));
 			par1World.setBlockToAir(par2, par3, par4);
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7e\u00A7oThe pillar deconstructs before you.");
+			PacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7e\u00A7oThe pillar deconstructs before you.");
 		}
 
 		return true;

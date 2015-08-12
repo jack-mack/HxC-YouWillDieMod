@@ -4,7 +4,7 @@ import YouWillDie.ModRegistry;
 import YouWillDie.YouWillDie;
 import YouWillDie.entities.EntityMysteryPotion;
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -73,11 +73,11 @@ public class ItemMysteryPotion extends Item {
 		if(damage < 12) {
 			if(Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().thePlayer.getEntityData().hasKey("PotionKnowledge")) {
 				if(Minecraft.getMinecraft().thePlayer.getEntityData().getIntArray("PotionKnowledge")[damage] != -1) {
-					Potion potion = Potion.potionTypes[NewPacketHandler.potionValues[damage]];
+					Potion potion = Potion.potionTypes[PacketHandler.potionValues[damage]];
 					name = StatCollector.translateToLocal(potion.getName()) + " Potion";
 
 					if(!potion.isInstant()) {
-						int time = NewPacketHandler.potionDurations[damage];
+						int time = PacketHandler.potionDurations[damage];
 						name += " (" + time + " seconds)";
 					}
 				}
@@ -151,7 +151,7 @@ public class ItemMysteryPotion extends Item {
 				if(par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[damage] == -1) {
 					par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[damage] = 1;
 
-					NewPacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(par3EntityPlayer, par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge"));
+					PacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(par3EntityPlayer, par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge"));
 
 					Potion potion = Potion.potionTypes[CommonTickHandler.worldData.potionValues[damage]];
 					String name = StatCollector.translateToLocal(potion.getName()) + " Potion";
@@ -161,7 +161,7 @@ public class ItemMysteryPotion extends Item {
 						name += " (" + time + " seconds)";
 					}
 
-					NewPacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou learnt Mystery Potion #" + (damage + 1) + " was a " + name + "!");
+					PacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou learnt Mystery Potion #" + (damage + 1) + " was a " + name + "!");
 				}
 			}
 
@@ -181,7 +181,7 @@ public class ItemMysteryPotion extends Item {
 
 			if(!potion.isInstant()) {name += " (" + time + " seconds)";}
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou drank a " + name + ".");
+			PacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou drank a " + name + ".");
 		}
 
 		return par1ItemStack;

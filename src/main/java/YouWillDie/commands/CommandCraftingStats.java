@@ -1,7 +1,7 @@
 package YouWillDie.commands;
 
 import YouWillDie.Config;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.misc.EntityStatHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -73,7 +73,7 @@ public class CommandCraftingStats implements ICommand {
 				}
 			}
 
-			NewPacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, message);
+			PacketHandler.SEND_MESSAGE.sendToPlayer(entityplayer, message);
 		}
 	}
 

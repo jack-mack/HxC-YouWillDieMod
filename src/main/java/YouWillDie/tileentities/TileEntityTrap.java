@@ -12,7 +12,7 @@ import net.minecraft.util.AxisAlignedBB;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import YouWillDie.YouWillDie;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 
 public class TileEntityTrap extends TileEntity {
 
@@ -74,7 +74,7 @@ public class TileEntityTrap extends TileEntity {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		int type = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 
-		if(player != null && (!NewPacketHandler.trapsDisabled || placedBy != null) && (player.getCommandSenderName().equals(placedBy) || player.isSneaking() || setting != 0 || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout"))) && getDistanceFrom(TileEntityRendererDispatcher.staticPlayerX, TileEntityRendererDispatcher.staticPlayerY, TileEntityRendererDispatcher.staticPlayerZ) < (player.getCommandSenderName().equals(placedBy) ? 4096 : 36.0F)) {
+		if(player != null && (!PacketHandler.trapsDisabled || placedBy != null) && (player.getCommandSenderName().equals(placedBy) || player.isSneaking() || setting != 0 || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout"))) && getDistanceFrom(TileEntityRendererDispatcher.staticPlayerX, TileEntityRendererDispatcher.staticPlayerY, TileEntityRendererDispatcher.staticPlayerZ) < (player.getCommandSenderName().equals(placedBy) ? 4096 : 36.0F)) {
 			if(type == 1) {
 				if(YouWillDie.r.nextInt(5) == 0) {worldObj.spawnParticle("smoke", xCoord + 0.5F, yCoord + 0.175F, zCoord + 0.5F, (YouWillDie.r.nextFloat() - 0.5F)/16, YouWillDie.r.nextFloat()/16, (YouWillDie.r.nextFloat() - 0.5F)/16);}
 				worldObj.spawnParticle("flame", xCoord + 0.5F, yCoord + 0.175F, zCoord + 0.5F, 0.0F, 0.0F, 0.0F);

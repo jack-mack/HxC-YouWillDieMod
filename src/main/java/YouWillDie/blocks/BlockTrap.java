@@ -4,7 +4,7 @@ import YouWillDie.Config;
 import YouWillDie.ModRegistry;
 import YouWillDie.YouWillDie;
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import YouWillDie.items.ItemTrap;
 import YouWillDie.tileentities.TileEntityTrap;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -76,10 +76,10 @@ public class BlockTrap extends BlockContainer implements IShearable {
 
 					te.markDirty();
 
-					NewPacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7e\u00A7oSet to: " + TileEntityTrap.settings[((TileEntityTrap) te).setting] + ".");
+					PacketHandler.SEND_MESSAGE.sendToPlayer(par5EntityPlayer, "\u00A7e\u00A7oSet to: " + TileEntityTrap.settings[((TileEntityTrap) te).setting] + ".");
 				}
 			} else if(par1World.isRemote) {
-				NewPacketHandler.DISARM_TRAP.sendToServer(par2, par3, par4, par5EntityPlayer.getEntityData().hasKey("Blessing") && par5EntityPlayer.getEntityData().getString("Blessing").equals("Mechanic"));
+				PacketHandler.DISARM_TRAP.sendToServer(par2, par3, par4, par5EntityPlayer.getEntityData().hasKey("Blessing") && par5EntityPlayer.getEntityData().getString("Blessing").equals("Mechanic"));
 			}
 		}
 
@@ -126,7 +126,7 @@ public class BlockTrap extends BlockContainer implements IShearable {
 	public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		TileEntity te = par1World.getTileEntity(par2, par3, par4);
-		return (player != null && te instanceof TileEntityTrap && (((TileEntityTrap) te).placedBy != null || !NewPacketHandler.trapsDisabled) && (player.getCommandSenderName().equals(((TileEntityTrap) te).placedBy) || player.isSneaking() || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout")))) ? super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3) : null;
+		return (player != null && te instanceof TileEntityTrap && (((TileEntityTrap) te).placedBy != null || !PacketHandler.trapsDisabled) && (player.getCommandSenderName().equals(((TileEntityTrap) te).placedBy) || player.isSneaking() || (player.getEntityData().hasKey("Blessing") && player.getEntityData().getString("Blessing").equals("Scout")))) ? super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3) : null;
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class BlockTrap extends BlockContainer implements IShearable {
 
 				par1World.setBlockToAir(par2, par3, par4);
 
-				NewPacketHandler.SEND_MESSAGE.sendToPlayer((EntityPlayer) par5Entity, "\u00A7c\u00A7oYou triggered a " + ItemTrap.names[type % trapTypes].toLowerCase() + "!");
+				PacketHandler.SEND_MESSAGE.sendToPlayer((EntityPlayer) par5Entity, "\u00A7c\u00A7oYou triggered a " + ItemTrap.names[type % trapTypes].toLowerCase() + "!");
 			} else {
 				if(type % trapTypes == 0) {
 					par5Entity.attackEntityFrom(DamageSource.cactus, 2.0F);
@@ -191,7 +191,7 @@ public class BlockTrap extends BlockContainer implements IShearable {
 	@Override
 	public boolean isReplaceable(IBlockAccess world, int x, int y, int z) {
 		TileEntity te = world.getTileEntity(x, y, z);
-		return super.isReplaceable(world, x, y, z) || (((world instanceof World && ((World) world).isRemote) ? NewPacketHandler.trapsDisabled : !Config.spawnTraps) && (te == null || !(te instanceof TileEntityTrap) || ((TileEntityTrap) te).placedBy == null));
+		return super.isReplaceable(world, x, y, z) || (((world instanceof World && ((World) world).isRemote) ? PacketHandler.trapsDisabled : !Config.spawnTraps) && (te == null || !(te instanceof TileEntityTrap) || ((TileEntityTrap) te).placedBy == null));
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class BlockTrap extends BlockContainer implements IShearable {
 		if(par5EntityLivingBase != null && par5EntityLivingBase instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) par5EntityLivingBase;
 
-			if(!player.capabilities.isCreativeMode || NewPacketHandler.trapsDisabled) {
+			if(!player.capabilities.isCreativeMode || PacketHandler.trapsDisabled) {
 				TileEntity te = par1World.getTileEntity(par2, par3, par4);
 				if(te != null && te instanceof TileEntityTrap) {((TileEntityTrap) te).placedBy = player.getCommandSenderName();}
 			}
@@ -255,7 +255,7 @@ public class BlockTrap extends BlockContainer implements IShearable {
 						EntityPlayer player = (EntityPlayer) o;
 
 						if(item.equals(player.getHeldItem())) {
-							NewPacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7e\u00A7oYou disarmed the trap.");
+							PacketHandler.SEND_MESSAGE.sendToPlayer(player, "\u00A7e\u00A7oYou disarmed the trap.");
 						}
 					}
 				}

@@ -3,6 +3,7 @@ package YouWillDie.entities;
 import java.util.Iterator;
 import java.util.List;
 
+import YouWillDie.network.PacketHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -19,7 +20,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import YouWillDie.YouWillDie;
 import YouWillDie.handlers.CommonTickHandler;
-import YouWillDie.handlers.NewPacketHandler;
 
 public class EntityMysteryPotion extends EntityThrowable {
 
@@ -132,7 +132,7 @@ public class EntityMysteryPotion extends EntityThrowable {
 						if(par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[type] == -1) {
 							par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge")[type] = 1;
 
-							NewPacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(par3EntityPlayer, par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge"));
+							PacketHandler.UPDATE_POTION_KNOWLEDGE.sendToPlayer(par3EntityPlayer, par3EntityPlayer.getEntityData().getIntArray("PotionKnowledge"));
 
 							Potion potion = Potion.potionTypes[CommonTickHandler.worldData.potionValues[type]];
 							String name = StatCollector.translateToLocal(potion.getName()) + " Potion";
@@ -142,14 +142,14 @@ public class EntityMysteryPotion extends EntityThrowable {
 								name += " (" + time + " seconds)";
 							}
 
-							NewPacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou learnt Mystery Potion #" + (type + 1) + " was a " + name + "!");
+							PacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou learnt Mystery Potion #" + (type + 1) + " was a " + name + "!");
 						}
 					} else {
 						Potion potion = Potion.potionTypes[damage];
 						String name = StatCollector.translateToLocal(potion.getName()) + " Potion";
 						if(!potion.isInstant()) {name += " (" + j + " seconds)";}
 
-						NewPacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou threw a " + name + ".");
+						PacketHandler.SEND_MESSAGE.sendToPlayer(par3EntityPlayer, "\u00A7oYou threw a " + name + ".");
 					}
 				}
 			}

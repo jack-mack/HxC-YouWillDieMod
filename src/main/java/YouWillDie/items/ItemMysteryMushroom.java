@@ -1,7 +1,7 @@
 package YouWillDie.items;
 
 import YouWillDie.ModRegistry;
-import YouWillDie.handlers.NewPacketHandler;
+import YouWillDie.network.PacketHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -44,7 +44,7 @@ public class ItemMysteryMushroom extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
-		return NewPacketHandler.mushroomColors[par1ItemStack.getItemDamage() % 13][par2 % 2];
+		return PacketHandler.mushroomColors[par1ItemStack.getItemDamage() % 13][par2 % 2];
 	}
 
 	@Override
